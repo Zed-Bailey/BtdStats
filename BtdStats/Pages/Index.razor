@@ -1,0 +1,106 @@
+﻿@page "/"
+@using BtdStats.Data.Services
+@using BtdStats.Data.Models
+@using System.Globalization
+
+@inject IStatsniteClient Client;
+
+<PageTitle>Index</PageTitle>
+
+@if (towers.Any())
+{
+    <div class="row row-cols-auto justify-content-center g-5 mb-5">
+        @foreach(var tower in towers)
+        {
+            var name = tower.Id.Replace("-", " ");
+            name = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(name);
+            var colour = GetMonkeyColour(tower.Id);
+            
+            <div class="col-auto " >
+                <div class="border-1 card" style="width: 18rem; ">
+                    <div class="position-relative" style="width: 18rem; height: 12rem;">
+                        <div class="position-absolute" style="background-color: @colour; width: 6rem; height: 7.2rem;  top: 5rem; left: 3rem; right: 3rem; "></div>
+                        <img class="position-absolute" src="https://statsnite.com/images/btd/towers/@tower.Id/tower.png" style="width: 12rem; z-index: 1; left: 3rem; right: 3rem;" alt="dart monkey"/>
+                    </div>
+    
+                    <div class="p-2 my-2">
+                        <p class="h4 card-title">@name</p>
+                        <p class="card-subtitle"></p>
+    
+                        <a class="btn btn-outline-primary w-100 rounded-pill mt-2" href="/detail/@tower.Id">View</a>
+                    </div>
+
+                </div>
+                
+            </div>
+        }
+    </div>
+}
+
+
+@* <div class="border-1 card" style="width: 18rem; "> *@
+@*     <div class="position-relative" style="width: 18rem; height: 12rem;"> *@
+@*         <div class="position-absolute" style="background-color: paleturquoise; width: 6rem; height: 7.2rem;  top: 5rem; left: 3rem; right: 3rem; z-index: 1"></div> *@
+@*         <img class="position-absolute" src="https://statsnite.com/images/btd/towers/@tower.Id/tower.png" style="width: 12rem; z-index: 2; left: 3rem; right: 3rem;" alt="dart monkey"/> *@
+@*     </div> *@
+@*      *@
+@*     <div class="p-2 my-2"> *@
+@*         <p class="h4 card-title">Dart Monkey</p> *@
+@*         <p class="card-subtitle"></p> *@
+@*          *@
+@*         <button class="btn btn-outline-primary w-100 rounded-pill mt-2">View</button> *@
+@*     </div> *@
+@*      *@
+@* </div> *@
+
+
+
+
+@code {
+    IList<TowerId> towers = new List<TowerId>();
+
+    List<string> PrimaryMonkeys = new()
+    {
+        "dart-monkey", "boomerang-monkey", "bomb-shooter", "tack-shooter", "ice-monkey", "glue-gunner"
+    };
+    
+    List<string> MilitaryMonkeys = new()
+    {
+        "sniper-monkey", "monkey-sub", "monkey-buccaneer", "monkey-ace", "heli-pilot", "mortar-monkey", "dartling-gunner"
+    };
+    
+    List<string> MagicMonkeys = new()
+    {
+        "wizard-monkey", "super-monkey", "ninja-monkey", "alchemist", "druid"
+    };
+    
+    List<string> SupportMonkeys = new()
+    {
+        "banana-farm", "spike-factory", "monkey-village", "engineer-monkey"
+    };
+    
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        towers = await Client.GetAllTowerIds();
+    }
+
+    public string GetMonkeyColour(string id)
+    {
+        if (PrimaryMonkeys.Contains(id))
+            return "rgb(128,195,230)";
+
+        if (MilitaryMonkeys.Contains(id))
+            return "rgb(159,240,137)";
+        
+        if (MagicMonkeys.Contains(id))
+            return "rgb(175,128,245)";
+        
+        if (SupportMonkeys.Contains(id))
+            return "rgb(244,193,133)";
+
+        return "";
+    }
+
+}
+

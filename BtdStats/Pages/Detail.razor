@@ -1,0 +1,87 @@
+@page "/detail/{towerId}"
+
+@using BtdStats.Data.Models
+@using BtdStats.Data.Services
+@inject IStatsniteClient Client;
+
+<a class="btn btn-outline-dark" href="/">
+    Back
+</a>
+
+@if (monkeyTower == null)
+{
+    <p>Loading....</p>
+}
+else
+{
+    <div style="background: var(--bs-dark)">
+        
+        <div class="flex">
+            <img src="https://statsnite.com/images/btd/towers/@TowerId/tower.png" style="width: 250px" alt="dart monkey"/>
+            <h2 class="text-white fw-bold" style="margin-top: -30px; margin-left: 83px">@monkeyTower.Name</h2>
+        </div>
+    </div>
+    
+    <div>
+            
+        <p>@monkeyTower.Description</p>
+        <p>@monkeyTower.Stats</p>
+        <p>@monkeyTower.Cost</p>
+        <p>@monkeyTower.Type</p>
+        <p>@monkeyTower.Paths.Path1.First()</p>
+    </div>
+    
+    @foreach (var path in monkeyTower.Paths.Path1)
+    {
+        <p>@path.Name | @path.Description</p>
+    }
+    
+    
+    <div class="flex flex-row align-content-between">
+        @for (var i = 0; i < monkeyTower.Paths.Path1.Count; i++)
+        {
+            var imgPath = $"https://statsnite.com/images/btd/towers/{TowerId}/{i+1}00.png";
+            var alt = $"{i + 1}00 {monkeyTower.Name}";
+            <img style="width: 150px;" src=@imgPath alt=@alt/>
+        }
+    </div>
+    
+    <div class="flex flex-row align-content-between">
+        @for (var i = 0; i < monkeyTower.Paths.Path2.Count; i++)
+        {
+            
+            var imgPath = $"https://statsnite.com/images/btd/towers/{TowerId}/0{i+1}0.png";
+            <img style="width: 150px;" src=@imgPath/>
+        }
+    </div>
+    
+    <div class="flex flex-row align-content-between">
+        @for (var i = 0; i < monkeyTower.Paths.Path3.Count; i++)
+        {
+            
+            var imgPath = $"https://statsnite.com/images/btd/towers/{TowerId}/00{i+1}.png";
+            <img style="width: 150px;" src=@imgPath/>
+        }
+    </div>
+
+}
+
+
+
+
+@code {
+
+    [Parameter]
+    public string TowerId { get; set; }
+
+    Tower? monkeyTower;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        monkeyTower = await Client.GetTower(TowerId);
+
+
+    }
+}
