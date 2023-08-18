@@ -1,15 +1,36 @@
 <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Dropdown button
+  <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    @_dropDownLabel
   </button>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="#">Action</a></li>
-    <li><a class="dropdown-item" href="#">Another action</a></li>
-    <li><a class="dropdown-item" href="#">Something else here</a></li>
+      <li><h6 class="dropdown-header">Select Game Mode</h6></li>
+    <li><button class="dropdown-item" @onclick="@(() => SetDifficulty(0))">Easy</button></li>
+    <li><button class="dropdown-item" @onclick="@(() => SetDifficulty(1))">Medium</button></li>
+    <li><button class="dropdown-item" @onclick="@(() => SetDifficulty(2))">Hard</button></li>
+    <li><button class="dropdown-item" @onclick="@(() => SetDifficulty(3))">Impoppable</button></li>
   </ul>
 </div>
 
 @code {
     [Parameter]
-    public int DifficultyIndex {get;set;}
+    public int DifficultySelected {get;set;}
+
+    [Parameter]
+    public EventCallback<int> DifficultySelectedChanged { get; set; }
+
+    string _dropDownLabel = "Easy";
+  
+    public async Task SetDifficulty(int difficulty)
+    {
+      DifficultySelected = difficulty;
+      await DifficultySelectedChanged.InvokeAsync(DifficultySelected);
+
+      _dropDownLabel = DifficultySelected switch {
+          0 => "Easy",
+          1 => "Medium",
+          2 => "Hard",
+          3 => "Impoppable",
+          _ => throw new ArgumentException($"Invalid game mode type: {DifficultySelected}")
+      };
+    }
 }
