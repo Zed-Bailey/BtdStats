@@ -2,6 +2,7 @@
 
 @using BtdStats.Data.Models
 @using BtdStats.Data.Services
+@using BtdStats.Utility
 @inject IStatsniteClient Client;
 
 <a class="btn btn-outline-dark" href="/">
@@ -14,83 +15,91 @@
 }
 else
 {
-    <div class="d-flex text-center justify-content-center">
-        
-        <div class="w-auto d-block">
-            <img class="" src="https://statsnite.com/images/btd/towers/@TowerId/tower.png" style="width: 300px;" alt="dart monkey"/>
-            <h1 class="display-2" style="font-family: 'Luckiest Guy';">@monkeyTower.Name</h1>
-        </div>
-        
-        
-    </div>
     
-    <div class="flex">
-        <div class="">
-            <span>Easy</span>
-            <img class="d-inline" src="img/Money_icon.webp" style="width: 40px;"/>
-            <span class="fw-bold h5">@monkeyTower.Cost.Easy</span>
-        </div>
+    <div class="row align-content-center" style="font-family: 'Luckiest Guy';">
         
-        <div class="">
-            <span>Medium</span>
-            <img class="d-inline" src="img/Money_icon.webp" style="width: 40px;"/>
-            <span class="fw-bold h5">@monkeyTower.Cost.Medium</span>
-        </div>
-        
-        <div class="">
-            <span>Hard</span>
-            <img class="d-inline" src="img/Money_icon.webp" style="width: 40px;"/>
-            <span class="fw-bold h5">@monkeyTower.Cost.Hard</span>
-        </div>
-        
-        <div class="">
-            <span>Impoppable</span>
-            <img class="d-inline" src="img/Money_icon.webp" style="width: 40px;"/>
-            <span class="fw-bold h5">@monkeyTower.Cost.Impoppable</span>
-        </div>
-    </div>
-    
-    <div>
+        <div class="col" style="width: 300px;">
+            <div style="height: 305px; ">
+                <div class="position-relative">
+                    <img class="position-absolute" src="https://statsnite.com/images/btd/towers/@TowerId/tower.png" style="width: 300px; z-index: 1" alt="dart monkey"/>
+                    <div class="position-absolute" style="background-color: @backgroundColour; width: 125px; height: 305px; top: 0; left: 75px;"></div>
+                </div>    
+            </div>
             
-        <p>@monkeyTower.Description</p>
-        <p>@monkeyTower.Stats</p>
-        <p>@monkeyTower.Cost</p>
-        <p>@monkeyTower.Type</p>
+            <p class="text-wrap">@monkeyTower.Description</p>
+        </div>
+        
+        <div class="col text-center">
+            <h5 class="display-3 mb-0">@monkeyTower.Name</h5>
+            <div>
+                <img class="d-inline" src="img/Money_icon.webp" style="width: 40px;"/>
+                <span class="h4">@cost</span>
+            </div>
+            <div class="flex">
+                <span>@monkeyTower.Stats.Pierce</span>
+                <span>@monkeyTower.Stats.Damage</span>
+                <span>@monkeyTower.Stats.Range</span>
+                <span>@monkeyTower.Stats.AttackSpeed</span>
+                
+            </div>
+        </div>
     </div>
     
-    @foreach (var path in monkeyTower.Paths.Path1)
-    {
-        <p>@path.Name | @path.Description</p>
-    }
+    
+  
     
     
-    <div class="flex flex-row align-content-between">
-        @for (var i = 0; i < monkeyTower.Paths.Path1.Count; i++)
-        {
-            var imgPath = $"https://statsnite.com/images/btd/towers/{TowerId}/{i+1}00.png";
-            var alt = $"{i + 1}00 {monkeyTower.Name}";
-            <img style="width: 150px;" src=@imgPath alt=@alt/>
-        }
-    </div>
     
-    <div class="flex flex-row align-content-between">
-        @for (var i = 0; i < monkeyTower.Paths.Path2.Count; i++)
-        {
-            
-            var imgPath = $"https://statsnite.com/images/btd/towers/{TowerId}/0{i+1}0.png";
-            <img style="width: 150px;" src=@imgPath/>
-        }
-    </div>
-    
-    <div class="flex flex-row align-content-between">
-        @for (var i = 0; i < monkeyTower.Paths.Path3.Count; i++)
-        {
-            
-            var imgPath = $"https://statsnite.com/images/btd/towers/{TowerId}/00{i+1}.png";
-            <img style="width: 150px;" src=@imgPath/>
-        }
-    </div>
+    @* <div class="flex flex-row align-content-between"> *@
+    @*     @for (var i = 0; i < monkeyTower.Paths.Path1.Count; i++) *@
+    @*     { *@
+    @*         var imgPath = $"https://statsnite.com/images/btd/towers/{TowerId}/{i+1}00.png"; *@
+    @*         var alt = $"{i + 1}00 {monkeyTower.Name}"; *@
+    @*         <img style="width: 150px;" src=@imgPath alt=@alt/> *@
+    @*     } *@
+    @* </div> *@
+    @* *@
+    @* <div class="flex flex-row align-content-between"> *@
+    @*     @for (var i = 0; i < monkeyTower.Paths.Path2.Count; i++) *@
+    @*     { *@
+    @*          *@
+    @*         var imgPath = $"https://statsnite.com/images/btd/towers/{TowerId}/0{i+1}0.png"; *@
+    @*         <img style="width: 150px;" src=@imgPath/> *@
+    @*     } *@
+    @* </div> *@
+    @* *@
+    @* <div class="flex flex-row align-content-between"> *@
+    @*     @for (var i = 0; i < monkeyTower.Paths.Path3.Count; i++) *@
+    @*     { *@
+    @*          *@
+    @*         var imgPath = $"https://statsnite.com/images/btd/towers/{TowerId}/00{i+1}.png"; *@
+    @*         <img style="width: 150px;" src=@imgPath/> *@
+    @*     } *@
+    @* </div> *@
 
+    
+    <div class="row">
+        <div class="col">
+            <div class="row">
+                <div class="flex flex-column">
+                    <p>@top</p>
+                    <p>@middle</p>
+                    <p>@bottom</p>
+                </div>
+                <div>
+                    <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                    <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                    <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                    <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                    <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                </div>
+            </div>
+        </div>
+        
+        <div class="col">
+            <img style="width: 200px;;" src="https://statsnite.com/images/btd/towers/dart-monkey/004.png?w=150"/>
+        </div>
+    </div>
 }
 
 
@@ -98,17 +107,51 @@ else
 
 @code {
 
+    int cost;
+    
     [Parameter]
     public string TowerId { get; set; }
 
     Tower? monkeyTower;
+
+    string backgroundColour;
+
+    int top;
+    int middle;
+    int bottom;
+    
     
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
 
         monkeyTower = await Client.GetTower(TowerId);
-
-
+        backgroundColour = MonkeyColour.GetMonkeyColourByType(monkeyTower.Type);
+        UpdateValues();
     }
+    
+    int _difficultySelected;
+    [CascadingParameter]
+    public int DifficultySelected {
+        get => _difficultySelected;
+        set {  
+            var lastValue = _difficultySelected;        // HERE //
+            _difficultySelected = value; 
+            if (lastValue != value) UpdateValues(); 
+        }
+    }
+    
+    
+    void UpdateValues()
+    {
+        cost = DifficultySelected switch {
+            0 => monkeyTower.Cost.Easy,
+            1 => monkeyTower.Cost.Medium,
+            2 => monkeyTower.Cost.Hard,
+            3 => monkeyTower.Cost.Impoppable,
+        };
+    }
+    
+    
+    
 }

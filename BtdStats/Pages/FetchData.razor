@@ -41,8 +41,8 @@ else
 @code {
     private WeatherForecast[]? forecasts;
 
-[CascadingParameter]
-public int DifficultySelected {get;set;}
+    [CascadingParameter]
+    public int DifficultySelected {get;set;}
     protected override async Task OnInitializedAsync()
     {
         forecasts = await ForecastService.GetForecastAsync(DateOnly.FromDateTime(DateTime.Now));
