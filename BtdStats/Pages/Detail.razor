@@ -14,11 +14,39 @@
 }
 else
 {
-    <div style="background: var(--bs-dark)">
+    <div class="d-flex text-center justify-content-center">
         
-        <div class="flex">
-            <img src="https://statsnite.com/images/btd/towers/@TowerId/tower.png" style="width: 250px" alt="dart monkey"/>
-            <h2 class="text-white fw-bold" style="margin-top: -30px; margin-left: 83px">@monkeyTower.Name</h2>
+        <div class="w-auto d-block">
+            <img class="" src="https://statsnite.com/images/btd/towers/@TowerId/tower.png" style="width: 300px;" alt="dart monkey"/>
+            <h1 class="display-2" style="font-family: 'Luckiest Guy';">@monkeyTower.Name</h1>
+        </div>
+        
+        
+    </div>
+    
+    <div class="flex">
+        <div class="">
+            <span>Easy</span>
+            <img class="d-inline" src="img/Money_icon.webp" style="width: 40px;"/>
+            <span class="fw-bold h5">@monkeyTower.Cost.Easy</span>
+        </div>
+        
+        <div class="">
+            <span>Medium</span>
+            <img class="d-inline" src="img/Money_icon.webp" style="width: 40px;"/>
+            <span class="fw-bold h5">@monkeyTower.Cost.Medium</span>
+        </div>
+        
+        <div class="">
+            <span>Hard</span>
+            <img class="d-inline" src="img/Money_icon.webp" style="width: 40px;"/>
+            <span class="fw-bold h5">@monkeyTower.Cost.Hard</span>
+        </div>
+        
+        <div class="">
+            <span>Impoppable</span>
+            <img class="d-inline" src="img/Money_icon.webp" style="width: 40px;"/>
+            <span class="fw-bold h5">@monkeyTower.Cost.Impoppable</span>
         </div>
     </div>
     
@@ -28,7 +56,6 @@ else
         <p>@monkeyTower.Stats</p>
         <p>@monkeyTower.Cost</p>
         <p>@monkeyTower.Type</p>
-        <p>@monkeyTower.Paths.Path1.First()</p>
     </div>
     
     @foreach (var path in monkeyTower.Paths.Path1)

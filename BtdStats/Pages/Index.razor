@@ -2,6 +2,7 @@
 @using BtdStats.Data.Services
 @using BtdStats.Data.Models
 @using System.Globalization
+@using BtdStats.Utility
 
 @inject IStatsniteClient Client;
 
@@ -14,7 +15,7 @@
         {
             var name = tower.Id.Replace("-", " ");
             name = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(name);
-            var colour = GetMonkeyColour(tower.Id);
+            var colour = MonkeyColour.GetMonkeyColourByName(tower.Id);
             
             <div class="col-auto " >
                 <div class="border-1 card" style="width: 18rem; ">
@@ -58,49 +59,10 @@
 
 @code {
     IList<TowerId> towers = new List<TowerId>();
-
-    List<string> PrimaryMonkeys = new()
-    {
-        "dart-monkey", "boomerang-monkey", "bomb-shooter", "tack-shooter", "ice-monkey", "glue-gunner"
-    };
-    
-    List<string> MilitaryMonkeys = new()
-    {
-        "sniper-monkey", "monkey-sub", "monkey-buccaneer", "monkey-ace", "heli-pilot", "mortar-monkey", "dartling-gunner"
-    };
-    
-    List<string> MagicMonkeys = new()
-    {
-        "wizard-monkey", "super-monkey", "ninja-monkey", "alchemist", "druid"
-    };
-    
-    List<string> SupportMonkeys = new()
-    {
-        "banana-farm", "spike-factory", "monkey-village", "engineer-monkey"
-    };
-    
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
         towers = await Client.GetAllTowerIds();
     }
-
-    public string GetMonkeyColour(string id)
-    {
-        if (PrimaryMonkeys.Contains(id))
-            return "rgb(128,195,230)";
-
-        if (MilitaryMonkeys.Contains(id))
-            return "rgb(159,240,137)";
-        
-        if (MagicMonkeys.Contains(id))
-            return "rgb(175,128,245)";
-        
-        if (SupportMonkeys.Contains(id))
-            return "rgb(244,193,133)";
-
-        return "";
-    }
-
 }
 
