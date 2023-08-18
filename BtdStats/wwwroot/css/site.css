@@ -1,5 +1,30 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+
+.stat-icon {
+    width: 50px;
+}
+
+.stat-text {
+    font-family: 'Luckiest Guy';
+    font-size: 32px;
+}
+
+.path-button {
+    width: 50px;
+    height: 50px;
+    border: 2px chartreuse solid;
+}
+
+.path-button:hover {
+    background-color: blue;
+}
+
+.path-button-selected {
+    
+}
+
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
