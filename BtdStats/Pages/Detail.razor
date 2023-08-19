@@ -6,7 +6,7 @@
 @inject IStatsniteClient Client;
 
 <a class="btn btn-outline-dark" href="/">
-    Back
+    <span class="oi oi-arrow-left"></span> Back
 </a>
 
 @if (monkeyTower == null)
@@ -26,33 +26,37 @@ else
                 </div>    
             </div>
             
-            <p class="text-wrap">@monkeyTower.Description</p>
+            <p class="text-wrap text-center mt-2">@monkeyTower.Description</p>
         </div>
         
         <div class="col-7 text-center align-items-center">
             <h5 class="display-2 mb-0">@monkeyTower.Name</h5>
-            <div class="flex flex-row align-content-center align-items-center">
-                <img class="d-inline me-2" src="img/Money_icon.webp" style="width: 40px;"/>
-                <span style="font-size: 32px;">@cost</span>
+
+            <div class="cost-frame">
+                <img class="money-img" src="img/Money_icon.webp" alt="money icon"/>
+                <div style="width: 53px; height: 45px; color: #343A40; font-size: 32px; font-family: Luckiest Guy; font-weight: 400;">@cost</div>
             </div>
-            <div class="row">
+
+            <div class="d-flex justify-content-center align-items-center gap-5" >
                 
-                <div class="col flex flex-row align-content-center align-items-center" style="vertical-align: middle">
-                    <img class="d-inline stat-icon" src="img/pierce.png" style="width: 40px;"/>
-                    <span class="stat-text">@monkeyTower.Stats.Pierce</span>
+                <div style="justify-content: center; align-items: center; gap: 10px; display: inline-flex">
+                  <img style="width: 50px;" src="img/pierce.png" />
+                  <div style="color: black; font-size: 32px; font-family: Luckiest Guy; font-weight: 400; word-wrap: break-word">@monkeyTower.Stats.Pierce</div>
                 </div>
 
-                <div class="col flex flex-row align-content-center align-items-center" style="vertical-align: middle">
-                    <img class="d-inline stat-icon" src="img/damage.png" style="width: 40px;"/>
-                    <span class="stat-text">@monkeyTower.Stats.Damage</span>
+                <div style="justify-content: center; align-items: center; gap: 10px; display: inline-flex">
+                    <img style="width: 50px;" src="img/damage.png" />
+                    <div style="color: black; font-size: 32px; font-family: Luckiest Guy; font-weight: 400; word-wrap: break-word">@monkeyTower.Stats.Damage</div>
                 </div>
-                <div class="col flex flex-row align-content-center align-items-center" style="vertical-align: middle">
-                    <img class="d-inline stat-icon" src="img/range.png" style="width: 40px;"/>
-                    <span class="stat-text">@monkeyTower.Stats.Range</span>
+                
+                <div style="justify-content: center; align-items: center; gap: 10px; display: inline-flex">
+                    <img style="width: 50px;" src="img/range.png" />
+                    <div style="color: black; font-size: 32px; font-family: Luckiest Guy; font-weight: 400; word-wrap: break-word">@monkeyTower.Stats.Range</div>
                 </div>
-                <div class="col flex flex-row align-content-center align-items-center" style="vertical-align: middle">
-                    <img class="d-inline stat-icon" src="img/attack_speed.png" style="width: 40px;"/>
-                    <span class="stat-text">@monkeyTower.Stats.AttackSpeed</span>
+                
+                <div style="justify-content: center; align-items: center; gap: 10px; display: inline-flex">
+                    <img style="width: 50px;" src="img/attack_speed.png" />
+                    <div style="color: black; font-size: 32px; font-family: Luckiest Guy; font-weight: 400; word-wrap: break-word">@monkeyTower.Stats.AttackSpeed</div>
                 </div>
 
             </div>

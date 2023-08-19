@@ -9,10 +9,13 @@
 
     <main>
      
-        <div class="top-row px-4 auth" style="z-index: 5">
+        <div class="top-row px-4 auth " style="z-index: 5">
             @* <LoginDisplay /> *@
             @* <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a> *@
-            <DifficultyDropdown @bind-DifficultySelected=DifficultySelected />
+            <div class="d-inline-flex gap-3 ">
+                <p class="lead" >Game Mode</p>
+                <DifficultyDropdown @bind-DifficultySelected=DifficultySelected />
+            </div>
         </div>
 
         <article class="content px-4">
