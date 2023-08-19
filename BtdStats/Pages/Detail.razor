@@ -26,7 +26,7 @@ else
                 </div>    
             </div>
             
-            <p class="text-wrap text-center mt-2">@monkeyTower.Description</p>
+            <p class="text-wrap text-center mt-2" style="font-family: 'Helvetica Neue';">@monkeyTower.Description</p>
         </div>
         
         <div class="col-7 text-center align-items-center">
@@ -65,16 +65,7 @@ else
 
     <div class="row">
         <div class="col">
-            <div class="row">
-                <div class="flex flex-column">
-                    <p>@top</p>
-                    <p>@middle</p>
-                    <p>@bottom</p>
-                </div>
-                <div>
-                    <div class="path-button"></div>
-                </div>
-            </div>
+            <PathSelectionComponent @bind-ValueSelected="top"/>
         </div>
         
         <div class="col">
