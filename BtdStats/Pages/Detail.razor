@@ -15,62 +15,109 @@
 }
 else
 {
-    
-    <div class="row justify-content-center" style="font-family: 'Luckiest Guy';">
-        
-        <div class="col-7" style="width: 300px;">
-            <div style="height: 305px; ">
-                <div class="position-relative">
-                    <img class="position-absolute" src="https://statsnite.com/images/btd/towers/@TowerId/tower.png" style="width: 300px; z-index: 1" alt="dart monkey"/>
-                    <div class="position-absolute" style="background-color: @backgroundColour; width: 125px; height: 305px; top: 0; left: 75px;"></div>
-                </div>    
-            </div>
-            
-            <p class="text-wrap text-center mt-2" style="font-family: 'Helvetica Neue';">@monkeyTower.Description</p>
-        </div>
-        
-        <div class="col-7 text-center align-items-center">
-            <h5 class="display-2 mb-0">@monkeyTower.Name</h5>
+    <div class="container">
+        <div class="row justify-content-center" style="font-family: 'Luckiest Guy';">
 
-            <div class="cost-frame">
-                <img class="money-img" src="img/Money_icon.webp" alt="money icon"/>
-                <div style="width: 53px; height: 45px; color: #343A40; font-size: 32px; font-family: Luckiest Guy; font-weight: 400;">@cost</div>
+            <div class="col-7" style="width: 300px;">
+                <div style="height: 305px; ">
+                    <div class="position-relative">
+                        <img class="position-absolute" src="https://statsnite.com/images/btd/towers/@TowerId/tower.png" style="width: 300px; z-index: 1" alt="dart monkey"/>
+                        <div class="position-absolute" style="background-color: @backgroundColour; width: 125px; height: 305px; top: 0; left: 75px;"></div>
+                    </div>
+                </div>
+
+                <p class="text-wrap text-center mt-2" style="font-family: 'Helvetica Neue';">@monkeyTower.Description</p>
             </div>
 
-            <div class="d-flex justify-content-center align-items-center gap-5" >
-                
-                <div style="justify-content: center; align-items: center; gap: 10px; display: inline-flex">
-                  <img style="width: 50px;" src="img/pierce.png" />
-                  <div style="color: black; font-size: 32px; font-family: Luckiest Guy; font-weight: 400; word-wrap: break-word">@monkeyTower.Stats.Pierce</div>
+            <div class="col-7 text-center align-items-center">
+                <h5 class="display-2 mb-0">@monkeyTower.Name</h5>
+
+                <div class="cost-frame">
+                    <img class="money-img" src="img/Money_icon.webp" alt="money icon"/>
+                    <div style="width: 53px; height: 45px; color: #343A40; font-size: 32px; font-family: Luckiest Guy; font-weight: 400;">@cost</div>
                 </div>
 
-                <div style="justify-content: center; align-items: center; gap: 10px; display: inline-flex">
-                    <img style="width: 50px;" src="img/damage.png" />
-                    <div style="color: black; font-size: 32px; font-family: Luckiest Guy; font-weight: 400; word-wrap: break-word">@monkeyTower.Stats.Damage</div>
-                </div>
-                
-                <div style="justify-content: center; align-items: center; gap: 10px; display: inline-flex">
-                    <img style="width: 50px;" src="img/range.png" />
-                    <div style="color: black; font-size: 32px; font-family: Luckiest Guy; font-weight: 400; word-wrap: break-word">@monkeyTower.Stats.Range</div>
-                </div>
-                
-                <div style="justify-content: center; align-items: center; gap: 10px; display: inline-flex">
-                    <img style="width: 50px;" src="img/attack_speed.png" />
-                    <div style="color: black; font-size: 32px; font-family: Luckiest Guy; font-weight: 400; word-wrap: break-word">@monkeyTower.Stats.AttackSpeed</div>
-                </div>
+                <div class="d-flex justify-content-center align-items-center gap-5">
 
+                    <div style="justify-content: center; align-items: center; gap: 10px; display: inline-flex">
+                        <img style="width: 50px;" src="img/pierce.png"/>
+                        <div style="color: black; font-size: 32px; font-family: Luckiest Guy; font-weight: 400; word-wrap: break-word">@monkeyTower.Stats.Pierce</div>
+                    </div>
+
+                    <div style="justify-content: center; align-items: center; gap: 10px; display: inline-flex">
+                        <img style="width: 50px;" src="img/damage.png"/>
+                        <div style="color: black; font-size: 32px; font-family: Luckiest Guy; font-weight: 400; word-wrap: break-word">@monkeyTower.Stats.Damage</div>
+                    </div>
+
+                    <div style="justify-content: center; align-items: center; gap: 10px; display: inline-flex">
+                        <img style="width: 50px;" src="img/range.png"/>
+                        <div style="color: black; font-size: 32px; font-family: Luckiest Guy; font-weight: 400; word-wrap: break-word">@monkeyTower.Stats.Range</div>
+                    </div>
+
+                    <div style="justify-content: center; align-items: center; gap: 10px; display: inline-flex">
+                        <img style="width: 50px;" src="img/attack_speed.png"/>
+                        <div style="color: black; font-size: 32px; font-family: Luckiest Guy; font-weight: 400; word-wrap: break-word">@monkeyTower.Stats.AttackSpeed</div>
+                    </div>
+
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col">
-            <PathSelectionComponent @bind-ValueSelected="top"/>
+        <div class="d-flex flex-column">
+            <div class="row align-content-center align-middle">
+                <div class="col align-items-center">
+                    <PathSelectionComponent @bind-ValueSelected="top" MaxValue="@maxTop" PathValueUpdated="PathValueChanged" PathIndex="0" Colour="@backgroundColour"/>
+                    <PathSelectionComponent @bind-ValueSelected="middle" MaxValue="@maxMiddle" PathValueUpdated="PathValueChanged" PathIndex="1" Colour="@backgroundColour"/>
+                    <PathSelectionComponent @bind-ValueSelected="bottom" MaxValue="@maxBottom" PathValueUpdated="PathValueChanged" PathIndex="2" Colour="@backgroundColour"/>
+                    <p>max top: @maxTop | max middle: @maxMiddle | max bottom: @maxBottom</p>
+                </div>
+
+                <div class="col align-items-center">
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <img style="width: 200px;" src="https://statsnite.com/images/btd/towers/dart-monkey/@(ImageName).png?w=150"/>
+                        <div class="cost-frame">
+                            <img class="money-img" src="img/Money_icon.webp" alt="money icon"/>
+                            <div style="width: 53px; height: 45px; color: #343A40; font-size: 32px; font-family: Luckiest Guy; font-weight: 400;">@pathCost</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="">
+                <button class="btn btn-outline-primary mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    Show effects
+                </button>
+                <div class="collapse card card-body" id="collapseExample">
+                    <ul class="banana-list">
+                        @foreach (var effect in monkeyTower.Paths.Path1.Take(top + 1))
+                        {
+                            foreach (var e in effect.Effects)
+                            {
+                                <li>@e</li>
+                            }
+                        }
+                        @foreach (var effect in monkeyTower.Paths.Path2.Take(middle + 1))
+                        {
+                            foreach (var e in effect.Effects)
+                            {
+                                <li>@e</li>
+                            }
+                        }
+                        @foreach (var effect in monkeyTower.Paths.Path3.Take(bottom + 1))
+                        {
+                            foreach (var e in effect.Effects)
+                            {
+                                <li>@e</li>
+                            }
+                        }
+                        
+                    </ul>
+                </div>
+            </div>
+
         </div>
         
-        <div class="col">
-            <img style="width: 200px;;" src="https://statsnite.com/images/btd/towers/dart-monkey/004.png?w=150"/>
-        </div>
     </div>
 }
 
@@ -80,7 +127,7 @@ else
 @code {
 
     int cost;
-    
+
     [Parameter]
     public string TowerId { get; set; }
 
@@ -88,11 +135,30 @@ else
 
     string backgroundColour;
 
-    int top;
-    int middle;
-    int bottom;
+    int top = -1;
+    int maxTop = 4;
+
+    int middle = -1;
+    int maxMiddle = 4;
+
+    int bottom = -1;
+    int maxBottom = 4;
+
+    int pathCost;
     
-    
+    string _imageName = "tower";
+    string ImageName
+    {
+        get => _imageName;
+        set
+        {
+            if (value == "000")
+                _imageName = "tower";
+            else
+                _imageName = value;
+        }
+    }
+
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
@@ -101,19 +167,22 @@ else
         backgroundColour = MonkeyColour.GetMonkeyColourByType(monkeyTower.Type);
         UpdateValues();
     }
-    
+
     int _difficultySelected;
+
     [CascadingParameter]
-    public int DifficultySelected {
+    public int DifficultySelected
+    {
         get => _difficultySelected;
-        set {  
-            var lastValue = _difficultySelected;        // HERE //
-            _difficultySelected = value; 
-            if (lastValue != value) UpdateValues(); 
+        set
+        {
+            var lastValue = _difficultySelected;
+            _difficultySelected = value;
+            if (lastValue != value) UpdateValues();
         }
     }
-    
-    
+
+
     void UpdateValues()
     {
         cost = DifficultySelected switch {
@@ -121,9 +190,106 @@ else
             1 => monkeyTower.Cost.Medium,
             2 => monkeyTower.Cost.Hard,
             3 => monkeyTower.Cost.Impoppable,
-        };
+            };
+        pathCost = CalculatePathCost();
     }
-    
-    
-    
+
+    int CalculatePathCost()
+    {
+        var total = cost;
+
+        if (top != -1) total += monkeyTower.Paths.Path1.Take(top + 1).Sum(x => x.Cost.SelectCost(DifficultySelected));
+        if (middle != -1) total += monkeyTower.Paths.Path2.Take(middle + 1).Sum(x => x.Cost.SelectCost(DifficultySelected));
+        if (bottom != -1) total += monkeyTower.Paths.Path3.Take(bottom + 1).Sum(x => x.Cost.SelectCost(DifficultySelected));
+
+        return total;
+    }
+
+    void PathValueChanged()
+    {
+        if (top == -1) maxTop = 4;
+        if (middle == -1) maxMiddle = 4;
+        if (bottom == -1) maxBottom = 4;
+
+        if (top >= 2)
+        {
+            if (middle >= 1)
+            {
+                maxMiddle = 1;
+                maxBottom = -1;
+            }
+            else if (bottom >= 1)
+            {
+                maxMiddle = -1;
+                maxBottom = 1;
+            }
+            else
+            {
+                maxMiddle = 1;
+                maxBottom = 1;
+            }
+        }
+
+        if (middle >= 2)
+        {
+            if (top >= 1)
+            {
+                maxTop = 1;
+                maxBottom = -1;
+            }
+            else if (bottom >= 1)
+            {
+                maxTop = -1;
+                maxBottom = 1;
+            }
+            else
+            {
+                maxTop = 1;
+                maxBottom = 1;
+            }
+        }
+
+        if (bottom >= 2)
+        {
+            if (top >= 1)
+            {
+                maxTop = 1;
+                maxMiddle = -1;
+            }
+            else if (middle >= 1)
+            {
+                maxTop = -1;
+                maxMiddle = 1;
+            }
+            else
+            {
+                maxTop = 1;
+                maxMiddle = 1;
+            }
+        }
+
+        top = Math.Min(maxTop, top);
+        middle = Math.Min(maxMiddle, middle);
+        bottom = Math.Min(maxBottom, bottom);
+
+        pathCost = CalculatePathCost();
+
+        if (top > middle && top > bottom)
+        {
+            ImageName = $"{top+1}00";
+        } else if (middle > top && middle > bottom)
+        {
+            ImageName = $"0{middle+1}0";
+        } else if (bottom > top && bottom > middle)
+        {
+            ImageName = $"00{bottom+1}";
+        }
+        else
+        {
+            ImageName = "000";
+        }
+        
+
+    }
+
 }

@@ -1,5 +1,27 @@
 namespace BtdStats.Data.Models;
 
+
+public static class TowerExtensions
+{
+    /// <summary>
+    /// Extension function to return the cost for a specified game mode
+    /// </summary>
+    /// <param name="cost"></param>
+    /// <param name="difficulty"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
+    public static int SelectCost(this Cost cost, int difficulty)
+    {
+        return difficulty switch
+        {
+            0 => cost.Easy,
+            1 => cost.Medium,
+            2 => cost.Hard,
+            3 => cost.Impoppable,
+            _ => throw new ArgumentException($"Invalid difficulty: {difficulty}")
+        };
+    }
+}
 public record Cost(
     int Easy,
     int Medium,

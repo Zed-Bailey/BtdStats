@@ -1,29 +1,40 @@
 
 <style>
     .path-btn {
-        border: solid red 2px;
+        border: solid @Colour 2px;
     }
     
     .path-btn:hover {
-        background-color: red;
+        background-color: @Colour;
+        cursor: pointer;
     }
     
     .path-btn-selected {
-        background-color: red;
+        background-color: @Colour;
+    }
+    
+    .path-btn-disabled {
+        opacity: 0.5;
+    }
+    
+    .path-btn-disabled:hover{
+        background-color: transparent;
+        cursor: not-allowed;
     }
     
 </style>
 
-<div>
-    <div>
-        @ValueSelected
+
+<div class="d-flex align-items-center gap-4 my-2">
+    <div class="">
+        <h3>@(ValueSelected + 1)</h3>
     </div>
     <div class="" style="display: flex; gap: 20px;">
-        <div class="rounded-3 path-btn @(ValueSelected >= 0 ? "path-btn-selected" : "")" style="width: 50px; height: 50px;" @onclick="@(() => PathClicked(0))"></div>
-        <div class="rounded-3 path-btn @(ValueSelected >= 1 ? "path-btn-selected" : "")" style="width: 50px; height: 50px;" @onclick="@(() => PathClicked(1))"></div>
-        <div class="rounded-3 path-btn @(ValueSelected >= 2 ? "path-btn-selected" : "")" style="width: 50px; height: 50px;" @onclick="@(() => PathClicked(2))"></div>
-        <div class="rounded-3 path-btn @(ValueSelected >= 3 ? "path-btn-selected" : "")" style="width: 50px; height: 50px;" @onclick="@(() => PathClicked(3))"></div>
-        <div class="rounded-3 path-btn @(ValueSelected >= 4 ? "path-btn-selected" : "")" style="width: 50px; height: 50px;" @onclick="@(() => PathClicked(4))"></div>
+        <div class="rounded-3 path-btn @(ValueSelected >= 0 ? "path-btn-selected" : "") @(MaxValue == -1 ? "path-btn-disabled" : "")" style="width: 50px; height: 50px;" @onclick="@(() => PathClicked(0))"></div>
+        <div class="rounded-3 path-btn @(ValueSelected >= 1 ? "path-btn-selected" : "") @(MaxValue == -1 ? "path-btn-disabled" : "")" style="width: 50px; height: 50px;" @onclick="@(() => PathClicked(1))"></div>
+        <div class="rounded-3 path-btn @(ValueSelected >= 2 ? "path-btn-selected" : "") @(MaxValue == -1 ? "path-btn-disabled" : "")" style="width: 50px; height: 50px;" @onclick="@(() => PathClicked(2))"></div>
+        <div class="rounded-3 path-btn @(ValueSelected >= 3 ? "path-btn-selected" : "") @(MaxValue == -1 ? "path-btn-disabled" : "")" style="width: 50px; height: 50px;" @onclick="@(() => PathClicked(3))"></div>
+        <div class="rounded-3 path-btn @(ValueSelected >= 4 ? "path-btn-selected" : "") @(MaxValue == -1 ? "path-btn-disabled" : "")" style="width: 50px; height: 50px;" @onclick="@(() => PathClicked(4))"></div>
     </div>
 </div>
 
@@ -32,15 +43,42 @@
 
     [Parameter]
     public int ValueSelected { get; set; }
-    
+
+    [Parameter]
+    public int MaxValue { get; set; }
+
     [Parameter]
     public EventCallback<int> ValueSelectedChanged { get; set; }
 
-    
+    [Parameter]
+    public EventCallback PathValueUpdated { get; set; }
+
+    [Parameter]
+    public int PathIndex { get; set; }
+
+    [Parameter] 
+    public string Colour {get; set; }
+
     public async Task PathClicked(int value)
     {
-        ValueSelected = value;
+        if (value <= MaxValue)
+        {
+            if (value == ValueSelected)
+            {
+                ValueSelected = -1;
+            }
+            else
+            {
+                ValueSelected = value;    
+            }
+        }
+        else
+        {
+            ValueSelected = MaxValue;
+        }
+        
         await ValueSelectedChanged.InvokeAsync(ValueSelected);
+        await PathValueUpdated.InvokeAsync((PathIndex, ValueSelected));
     }
 
 }
