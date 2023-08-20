@@ -4,6 +4,7 @@
 @using BtdStats.Data.Services
 @using BtdStats.Utility
 @inject IStatsniteClient Client;
+@inject IJSRuntime JsRuntime;
 
 <a class="btn btn-outline-dark" href="/">
     <span class="oi oi-arrow-left"></span> Back
@@ -39,22 +40,22 @@ else
 
                 <div class="d-flex justify-content-center align-items-center gap-5">
 
-                    <div style="justify-content: center; align-items: center; gap: 10px; display: inline-flex">
+                    <div style="justify-content: center; align-items: center; gap: 10px; display: inline-flex" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Pierce">
                         <img style="width: 50px;" src="img/pierce.png"/>
                         <div style="color: black; font-size: 32px; font-family: Luckiest Guy; font-weight: 400; word-wrap: break-word">@monkeyTower.Stats.Pierce</div>
                     </div>
 
-                    <div style="justify-content: center; align-items: center; gap: 10px; display: inline-flex">
+                    <div style="justify-content: center; align-items: center; gap: 10px; display: inline-flex" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Damage">
                         <img style="width: 50px;" src="img/damage.png"/>
                         <div style="color: black; font-size: 32px; font-family: Luckiest Guy; font-weight: 400; word-wrap: break-word">@monkeyTower.Stats.Damage</div>
                     </div>
 
-                    <div style="justify-content: center; align-items: center; gap: 10px; display: inline-flex">
+                    <div style="justify-content: center; align-items: center; gap: 10px; display: inline-flex" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Range">
                         <img style="width: 50px;" src="img/range.png"/>
                         <div style="color: black; font-size: 32px; font-family: Luckiest Guy; font-weight: 400; word-wrap: break-word">@monkeyTower.Stats.Range</div>
                     </div>
 
-                    <div style="justify-content: center; align-items: center; gap: 10px; display: inline-flex">
+                    <div style="justify-content: center; align-items: center; gap: 10px; display: inline-flex" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Attack Speed">
                         <img style="width: 50px;" src="img/attack_speed.png"/>
                         <div style="color: black; font-size: 32px; font-family: Luckiest Guy; font-weight: 400; word-wrap: break-word">@monkeyTower.Stats.AttackSpeed</div>
                     </div>
@@ -121,9 +122,6 @@ else
     </div>
 }
 
-
-
-
 @code {
 
     int cost;
@@ -162,10 +160,17 @@ else
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-
+        
+        
         monkeyTower = await Client.GetTower(TowerId);
         backgroundColour = MonkeyColour.GetMonkeyColourByType(monkeyTower.Type);
         UpdateValues();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        await JsRuntime.InvokeVoidAsync("InitializeTooltips");
     }
 
     int _difficultySelected;
