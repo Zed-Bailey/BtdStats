@@ -91,8 +91,11 @@ else
             </div>
 
             <div class="px-5">
-                <button class="btn btn-outline-primary mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                <button class="btn btn-outline-primary mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" @onclick="ShowEffectsToggled">
                     Show effects
+                    <span class="oi @(effectsVisible ? "oi-chevron-bottom" : "oi-chevron-top")"></span>
+                    
+                        
                 </button>
                 <div class="collapse card card-body" id="collapseExample">
                     <ul class="banana-list">
@@ -136,7 +139,7 @@ else
                     <div class="card mb-3">
                         <img src="https://statsnite.com/images/btd/towers/@TowerId/@(i + 1)00.png" loading="lazy" style="max-width: 250px;" class="card-img-top p-2 align-self-center img-fluid">
                         <div class="card-body">
-                            <h4 class="card-title luckiest-guy"> @(i + 1)00 – @(monkeyTower.Paths.Path1[i].Name)</h4>
+                            <h4 class="card-title luckiest-guy text-truncate"> @(i + 1)00 – @(monkeyTower.Paths.Path1[i].Name)</h4>
                             <a class="stretched-link btn btn-outline-primary" @onclick="@(() => ModalClicked(0, index))" data-bs-toggle="modal" data-bs-target="#exampleModal">Tower Detail</a>
                         </div>
                     </div>
@@ -150,7 +153,7 @@ else
                     <div class="card mb-3">
                         <img src="https://statsnite.com/images/btd/towers/@TowerId/0@(i + 1)0.png" loading="lazy" style="max-width: 250px;" class="card-img-top p-2 align-self-center img-fluid">
                         <div class="card-body">
-                            <h4 class="card-title luckiest-guy"> 0@(i + 1)0 – @(monkeyTower.Paths.Path2[i].Name)</h4>
+                            <h4 class="card-title luckiest-guy text-truncate"> 0@(i + 1)0 – @(monkeyTower.Paths.Path2[i].Name)</h4>
                             <a class="stretched-link btn btn-outline-primary" @onclick="@(() => ModalClicked(1, index))"  data-bs-toggle="modal" data-bs-target="#exampleModal">Tower Detail</a>
                         </div>
                     </div>
@@ -164,7 +167,7 @@ else
                     <div class="card mb-3">
                         <img src="https://statsnite.com/images/btd/towers/@TowerId/00@(i + 1).png" loading="lazy" style="max-width: 250px;" class="card-img-top p-2 align-self-center img-fluid">
                         <div class="card-body">
-                            <h4 class="card-title luckiest-guy"> 00@(i + 1) – @(monkeyTower.Paths.Path3[i].Name)</h4>
+                            <h4 class="card-title luckiest-guy text-truncate"> 00@(i + 1) – @(monkeyTower.Paths.Path3[i].Name)</h4>
                             <a class="stretched-link btn btn-outline-primary" @onclick="@(() => ModalClicked(2, index))" data-bs-toggle="modal" data-bs-target="#exampleModal">Tower Detail</a>
                         </div>
                     </div>
@@ -172,7 +175,44 @@ else
             </div>
 
         </div>
+        
     </div>
+    
+    @if (monkeyTower.Paths.Paragon != null)
+    {
+        <div class="d-flex justify-content-center align-items-center gap-5 mt-5">
+            <div class="col-auto">
+                <img src="img/paragon.png" style="max-width: 125px; max-height: 125px;" class="img-fluid"/>    
+            </div>
+            
+            <div class="text-center align-items-center col">
+                <h5 class="display-2 mb-0 luckiest-guy">@monkeyTower.Paths.Paragon.Name</h5>
+
+                <div class="cost-frame luckiest-guy">
+                    <img class="money-img" src="img/Money_icon.webp" alt="money icon"/>
+                    <div style="width: 53px; height: 45px; font-size: 32px; font-weight: 400;">@monkeyTower.Paths.Paragon.Cost.SelectCost(DifficultySelected)</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row p-3">
+            <div class="col p-2">
+                <img src="https://statsnite.com/images/btd/towers/@TowerId/paragon.png" style="max-width: 350px;" class="img-fluid align-self-center"/>
+            </div>
+            <div class="col">
+                <p class="lead">@monkeyTower.Paths.Paragon.Description</p>
+                <hr/>
+                <h6 class="text-body-secondary mb-1 pb-0">Effects</h6>
+                <ul class="">
+                    @foreach (var effect in monkeyTower.Paths.Paragon.Effects)
+                    {
+                        <li>@effect</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+
     @if (selectedModalUpgrade != null)
     {
         <PathUpgradeModal Upgrade="@selectedModalUpgrade" OnModalClose="ModalClosed" TowerId="@TowerId" UpgradeKey="@upgradeKey"/>    
@@ -202,7 +242,9 @@ else
 
     PathUpgrade? selectedModalUpgrade;
     string upgradeKey;
-
+    
+    bool effectsVisible = false;
+    
     string _imageName = "tower";
 
     string ImageName
@@ -385,6 +427,11 @@ else
     void ModalClosed()
     {
         
+    }
+
+    void ShowEffectsToggled()
+    {
+        effectsVisible = !effectsVisible;
     }
 
 }
