@@ -71,7 +71,7 @@ else
         <hr/>
         <h2>Calculate Path Upgrade Cost</h2>
         <div class="d-flex flex-column mt-2">
-            <div class="row align-content-center align-middle">
+            <div class="row align-content-center align-middle px-5">
                 <div class="col align-self-center">
                     <PathSelectionComponent @bind-ValueSelected="top" MaxValue="@maxTop" PathValueUpdated="PathValueChanged" PathIndex="0" Colour="@backgroundColour"/>
                     <PathSelectionComponent @bind-ValueSelected="middle" MaxValue="@maxMiddle" PathValueUpdated="PathValueChanged" PathIndex="1" Colour="@backgroundColour"/>
@@ -80,7 +80,7 @@ else
 
                 <div class="col align-items-center align-self-center">
                     <div class="d-flex flex-column justify-content-center align-items-center">
-                        <img style="width: 200px;" src="https://statsnite.com/images/btd/towers/@TowerId/@(ImageName).png?w=150"/>
+                        <img style="max-width: 250px;" class="img-fluid" src="https://statsnite.com/images/btd/towers/@TowerId/@(ImageName).png?w=150"/>
                         <div class="cost-frame">
                             <img class="money-img" src="img/Money_icon.webp" alt="money icon"/>
                             <div style="width: 53px; height: 45px; color: #343A40; font-size: 32px; font-family: Luckiest Guy; font-weight: 400;">@pathCost</div>
@@ -134,7 +134,7 @@ else
                 {
                     var index = i;
                     <div class="card mb-3">
-                        <img src="https://statsnite.com/images/btd/towers/@TowerId/@(i + 1)00.png" loading="lazy" style="max-width: 300px;" class="card-img-top p-2 align-self-center img-fluid">
+                        <img src="https://statsnite.com/images/btd/towers/@TowerId/@(i + 1)00.png" loading="lazy" style="max-width: 250px;" class="card-img-top p-2 align-self-center img-fluid">
                         <div class="card-body">
                             <h4 class="card-title luckiest-guy"> @(i + 1)00 – @(monkeyTower.Paths.Path1[i].Name)</h4>
                             <a class="stretched-link btn btn-outline-primary" @onclick="@(() => ModalClicked(0, index))" data-bs-toggle="modal" data-bs-target="#exampleModal">Tower Detail</a>
@@ -148,7 +148,7 @@ else
                 {
                     var index = i;
                     <div class="card mb-3">
-                        <img src="https://statsnite.com/images/btd/towers/@TowerId/0@(i + 1)0.png" loading="lazy" style="max-width: 300px;" class="card-img-top p-2 align-self-center img-fluid">
+                        <img src="https://statsnite.com/images/btd/towers/@TowerId/0@(i + 1)0.png" loading="lazy" style="max-width: 250px;" class="card-img-top p-2 align-self-center img-fluid">
                         <div class="card-body">
                             <h4 class="card-title luckiest-guy"> 0@(i + 1)0 – @(monkeyTower.Paths.Path2[i].Name)</h4>
                             <a class="stretched-link btn btn-outline-primary" @onclick="@(() => ModalClicked(1, index))" data-bs-toggle="modal" data-bs-target="#exampleModal">Tower Detail</a>
@@ -162,7 +162,7 @@ else
                 {
                     var index = i;
                     <div class="card mb-3">
-                        <img src="https://statsnite.com/images/btd/towers/@TowerId/00@(i + 1).png" loading="lazy" style="max-width: 300px;" class="card-img-top p-2 align-self-center img-fluid">
+                        <img src="https://statsnite.com/images/btd/towers/@TowerId/00@(i + 1).png" loading="lazy" style="max-width: 250px;" class="card-img-top p-2 align-self-center img-fluid">
                         <div class="card-body">
                             <h4 class="card-title luckiest-guy"> 00@(i + 1) – @(monkeyTower.Paths.Path3[i].Name)</h4>
                             <a class="stretched-link btn btn-outline-primary" @onclick="@(() => ModalClicked(2, index))" data-bs-toggle="modal" data-bs-target="#exampleModal">Tower Detail</a>
