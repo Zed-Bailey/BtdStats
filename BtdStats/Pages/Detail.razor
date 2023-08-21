@@ -21,7 +21,7 @@
 else
 {
     <div class="container">
-        <div class="row justify-content-center" style="font-family: 'Luckiest Guy';">
+        <div class="row justify-content-center">
 
             <div class="col-7" style="width: 300px;">
                 <div style="height: 305px; ">
@@ -35,14 +35,14 @@ else
             </div>
 
             <div class="col-7 text-center align-items-center">
-                <h5 class="display-2 mb-0">@monkeyTower.Name</h5>
+                <h5 class="display-2 mb-0 luckiest-guy">@monkeyTower.Name</h5>
 
-                <div class="cost-frame">
+                <div class="cost-frame luckiest-guy">
                     <img class="money-img" src="img/Money_icon.webp" alt="money icon"/>
-                    <div style="width: 53px; height: 45px; color: #343A40; font-size: 32px; font-family: Luckiest Guy; font-weight: 400;">@cost</div>
+                    <div style="width: 53px; height: 45px; font-size: 32px; font-weight: 400;">@cost</div>
                 </div>
 
-                <div class="d-flex justify-content-center align-items-center gap-5">
+                <div class="d-flex justify-content-center align-items-center gap-5 luckiest-guy">
 
                     <div style="justify-content: center; align-items: center; gap: 10px; display: inline-flex" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Pierce">
                         <img style="width: 50px;" src="img/pierce.png"/>
@@ -90,7 +90,7 @@ else
                 </div>
             </div>
 
-            <div class="">
+            <div class="px-5">
                 <button class="btn btn-outline-primary mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                     Show effects
                 </button>
@@ -151,7 +151,7 @@ else
                         <img src="https://statsnite.com/images/btd/towers/@TowerId/0@(i + 1)0.png" loading="lazy" style="max-width: 250px;" class="card-img-top p-2 align-self-center img-fluid">
                         <div class="card-body">
                             <h4 class="card-title luckiest-guy"> 0@(i + 1)0 – @(monkeyTower.Paths.Path2[i].Name)</h4>
-                            <a class="stretched-link btn btn-outline-primary" @onclick="@(() => ModalClicked(1, index))" data-bs-toggle="modal" data-bs-target="#exampleModal">Tower Detail</a>
+                            <a class="stretched-link btn btn-outline-primary" @onclick="@(() => ModalClicked(1, index))"  data-bs-toggle="modal" data-bs-target="#exampleModal">Tower Detail</a>
                         </div>
                     </div>
                 }
@@ -173,10 +173,9 @@ else
 
         </div>
     </div>
-
     @if (selectedModalUpgrade != null)
     {
-        <PathUpgradeModal Upgrade="@selectedModalUpgrade" OnModalClose="ModalClosed" TowerId="@TowerId" UpgradeKey="@upgradeKey"/>
+        <PathUpgradeModal Upgrade="@selectedModalUpgrade" OnModalClose="ModalClosed" TowerId="@TowerId" UpgradeKey="@upgradeKey"/>    
     }
 }
 
@@ -218,23 +217,6 @@ else
         }
     }
 
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-
-
-        monkeyTower = await Client.GetTower(TowerId);
-        backgroundColour = MonkeyColour.GetMonkeyColourByType(monkeyTower.Type);
-        UpdateValues();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await base.OnAfterRenderAsync(firstRender);
-    // JSRuntime cant be invoked on initialization
-        await JsRuntime.InvokeVoidAsync("InitializeTooltips");
-    }
-
     int _difficultySelected;
 
     [CascadingParameter]
@@ -248,6 +230,26 @@ else
             if (lastValue != value) UpdateValues();
         }
     }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        monkeyTower = await Client.GetTower(TowerId);
+        selectedModalUpgrade = monkeyTower.Paths.Path1.First();
+        
+        backgroundColour = MonkeyColour.GetMonkeyColourByType(monkeyTower.Type);
+        UpdateValues();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        // JSRuntime cant be invoked on initialization
+        await JsRuntime.InvokeVoidAsync("InitializeTooltips");
+    }
+
+
 
 
     void UpdateValues()
@@ -363,7 +365,6 @@ else
     // upgrade index is the 0 indexed upgrade index
     void ModalClicked(int path, int upgradeIndex)
     {
-        Console.WriteLine($"Modal open clicked {path}/{upgradeIndex}");
         switch (path)
         {
             case 0:
