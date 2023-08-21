@@ -12,7 +12,11 @@
 
 @if (monkeyTower == null)
 {
-    <p>Loading....</p>
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
 }
 else
 {
@@ -64,16 +68,17 @@ else
             </div>
         </div>
 
-        <div class="d-flex flex-column">
+        <hr/>
+        <h2>Calculate Path Upgrade Cost</h2>
+        <div class="d-flex flex-column mt-2">
             <div class="row align-content-center align-middle">
-                <div class="col align-items-center">
+                <div class="col align-self-center">
                     <PathSelectionComponent @bind-ValueSelected="top" MaxValue="@maxTop" PathValueUpdated="PathValueChanged" PathIndex="0" Colour="@backgroundColour"/>
                     <PathSelectionComponent @bind-ValueSelected="middle" MaxValue="@maxMiddle" PathValueUpdated="PathValueChanged" PathIndex="1" Colour="@backgroundColour"/>
                     <PathSelectionComponent @bind-ValueSelected="bottom" MaxValue="@maxBottom" PathValueUpdated="PathValueChanged" PathIndex="2" Colour="@backgroundColour"/>
-                    <p>max top: @maxTop | max middle: @maxMiddle | max bottom: @maxBottom</p>
                 </div>
 
-                <div class="col align-items-center">
+                <div class="col align-items-center align-self-center">
                     <div class="d-flex flex-column justify-content-center align-items-center">
                         <img style="width: 200px;" src="https://statsnite.com/images/btd/towers/@TowerId/@(ImageName).png?w=150"/>
                         <div class="cost-frame">
@@ -112,19 +117,70 @@ else
                                 <li>@e</li>
                             }
                         }
-                        
+
                     </ul>
                 </div>
             </div>
 
         </div>
-        
+
+        <hr class="mx-5"/>
+        <h2>Upgrades</h2>
+        <div class="row row-cols-3">
+
+            @* TODO: add alt tags  *@
+            <div class="col">
+                @for (var i = 0; i < monkeyTower.Paths.Path1.Count; i++)
+                {
+                    var index = i;
+                    <div class="card mb-3">
+                        <img src="https://statsnite.com/images/btd/towers/@TowerId/@(i + 1)00.png" loading="lazy" style="max-width: 300px;" class="card-img-top p-2 align-self-center img-fluid">
+                        <div class="card-body">
+                            <h4 class="card-title luckiest-guy"> @(i + 1)00 – @(monkeyTower.Paths.Path1[i].Name)</h4>
+                            <a class="stretched-link btn btn-outline-primary" @onclick="@(() => ModalClicked(0, index))" data-bs-toggle="modal" data-bs-target="#exampleModal">Tower Detail</a>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="col">
+                @for (var i = 0; i < monkeyTower.Paths.Path2.Count; i++)
+                {
+                    var index = i;
+                    <div class="card mb-3">
+                        <img src="https://statsnite.com/images/btd/towers/@TowerId/0@(i + 1)0.png" loading="lazy" style="max-width: 300px;" class="card-img-top p-2 align-self-center img-fluid">
+                        <div class="card-body">
+                            <h4 class="card-title luckiest-guy"> 0@(i + 1)0 – @(monkeyTower.Paths.Path2[i].Name)</h4>
+                            <a class="stretched-link btn btn-outline-primary" @onclick="@(() => ModalClicked(1, index))" data-bs-toggle="modal" data-bs-target="#exampleModal">Tower Detail</a>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="col">
+                @for (var i = 0; i < monkeyTower.Paths.Path3.Count; i++)
+                {
+                    var index = i;
+                    <div class="card mb-3">
+                        <img src="https://statsnite.com/images/btd/towers/@TowerId/00@(i + 1).png" loading="lazy" style="max-width: 300px;" class="card-img-top p-2 align-self-center img-fluid">
+                        <div class="card-body">
+                            <h4 class="card-title luckiest-guy"> 00@(i + 1) – @(monkeyTower.Paths.Path3[i].Name)</h4>
+                            <a class="stretched-link btn btn-outline-primary" @onclick="@(() => ModalClicked(2, index))" data-bs-toggle="modal" data-bs-target="#exampleModal">Tower Detail</a>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
     </div>
+
+    @if (selectedModalUpgrade != null)
+    {
+        <PathUpgradeModal Upgrade="@selectedModalUpgrade" OnModalClose="ModalClosed" TowerId="@TowerId" UpgradeKey="@upgradeKey"/>
+    }
 }
 
 @code {
-
-    int cost;
 
     [Parameter]
     public string TowerId { get; set; }
@@ -132,6 +188,7 @@ else
     Tower? monkeyTower;
 
     string backgroundColour;
+    int cost;
 
     int top = -1;
     int maxTop = 4;
@@ -143,8 +200,12 @@ else
     int maxBottom = 4;
 
     int pathCost;
-    
+
+    PathUpgrade? selectedModalUpgrade;
+    string upgradeKey;
+
     string _imageName = "tower";
+
     string ImageName
     {
         get => _imageName;
@@ -160,8 +221,8 @@ else
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        
-        
+
+
         monkeyTower = await Client.GetTower(TowerId);
         backgroundColour = MonkeyColour.GetMonkeyColourByType(monkeyTower.Type);
         UpdateValues();
@@ -170,6 +231,7 @@ else
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
+    // JSRuntime cant be invoked on initialization
         await JsRuntime.InvokeVoidAsync("InitializeTooltips");
     }
 
@@ -281,20 +343,47 @@ else
 
         if (top > middle && top > bottom)
         {
-            ImageName = $"{top+1}00";
-        } else if (middle > top && middle > bottom)
+            ImageName = $"{top + 1}00";
+        }
+        else if (middle > top && middle > bottom)
         {
-            ImageName = $"0{middle+1}0";
-        } else if (bottom > top && bottom > middle)
+            ImageName = $"0{middle + 1}0";
+        }
+        else if (bottom > top && bottom > middle)
         {
-            ImageName = $"00{bottom+1}";
+            ImageName = $"00{bottom + 1}";
         }
         else
         {
             ImageName = "000";
         }
-        
+    }
 
+    // path is the 0 indexed path
+    // upgrade index is the 0 indexed upgrade index
+    void ModalClicked(int path, int upgradeIndex)
+    {
+        Console.WriteLine($"Modal open clicked {path}/{upgradeIndex}");
+        switch (path)
+        {
+            case 0:
+                selectedModalUpgrade = monkeyTower.Paths.Path1[upgradeIndex];
+                upgradeKey = $"{upgradeIndex + 1}00";
+                break;
+            case 1:
+                selectedModalUpgrade = monkeyTower.Paths.Path2[upgradeIndex];
+                upgradeKey = $"0{upgradeIndex + 1}0";
+                break;
+            case 2:
+                selectedModalUpgrade = monkeyTower.Paths.Path3[upgradeIndex];
+                upgradeKey = $"00{upgradeIndex + 1}";
+                break;
+        }
+    }
+
+    void ModalClosed()
+    {
+        
     }
 
 }

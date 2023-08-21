@@ -21,20 +21,28 @@
                 <div class="border-1 card" style="width: 18rem; ">
                     <div class="position-relative" style="width: 18rem; height: 12rem;">
                         <div class="position-absolute" style="background-color: @colour; width: 6rem; height: 7.2rem;  top: 5rem; left: 3rem; right: 3rem; "></div>
-                        <img class="position-absolute" src="https://statsnite.com/images/btd/towers/@tower.Id/tower.png" style="width: 12rem; z-index: 1; left: 3rem; right: 3rem;" alt="dart monkey"/>
+                        <img class="position-absolute" src="https://statsnite.com/images/btd/towers/@tower.Id/tower.png" style="width: 12rem; z-index: 1; left: 3rem; right: 3rem;" alt="dart monkey" loading="lazy"/>
                     </div>
     
                     <div class="p-2 my-2">
                         <p class="h4 card-title">@name</p>
                         <p class="card-subtitle"></p>
     
-                        <a class="btn btn-outline-primary w-100 rounded-pill mt-2" href="/detail/@tower.Id">View</a>
+                        <a class="btn btn-outline-primary w-100 rounded-pill mt-2 stretched-link" href="/detail/@tower.Id">View</a>
                     </div>
 
                 </div>
                 
             </div>
         }
+    </div>
+}
+else
+{
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
     </div>
 }
 

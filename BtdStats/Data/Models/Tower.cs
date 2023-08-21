@@ -38,7 +38,7 @@ public record Paragon(
     string Source
 );
 
-public record Path1(
+public record PathUpgrade(
     string Name,
     string Description,
     Cost Cost,
@@ -47,28 +47,11 @@ public record Path1(
     string Source
 );
 
-public record Path2(
-    string Name,
-    string Description,
-    Cost Cost,
-    int UnlockXp,
-    IReadOnlyList<string> Effects,
-    string Source
-);
-
-public record Path3(
-    string Name,
-    string Description,
-    Cost Cost,
-    int UnlockXp,
-    IReadOnlyList<string> Effects,
-    string Source
-);
 
 public record Paths(
-    IReadOnlyList<Path1> Path1,
-    IReadOnlyList<Path2> Path2,
-    IReadOnlyList<Path3> Path3,
+    IReadOnlyList<PathUpgrade> Path1,
+    IReadOnlyList<PathUpgrade> Path2,
+    IReadOnlyList<PathUpgrade> Path3,
     Paragon Paragon
 );
 
