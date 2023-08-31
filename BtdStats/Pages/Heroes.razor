@@ -1,0 +1,60 @@
+@page "/heroes"
+@using BtdStats.Data.Services
+@using BtdStats.Data.Models
+@using System.Globalization
+@using BtdStats.Utility
+
+@inject IStatsniteClient Client;
+
+<PageTitle>Heroes</PageTitle>
+
+@if (heroes.Any())
+{
+    <div class="row row-cols-auto justify-content-center g-5 mb-5">
+        @foreach(var hero in heroes)
+        {
+            var name = hero.Id.Replace("-", " ");
+            name = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(name);
+            // var colour = MonkeyColour.GetMonkeyColourByName(hero.Id);
+            
+            <div class="col-auto " >
+                <div class="border-1 card" style="width: 18rem; ">
+                    <div class="position-relative" style="width: 18rem; height: 12rem;">
+                        @* <div class="position-absolute" style="background-color: @colour; width: 6rem; height: 7.2rem;  top: 5rem; left: 3rem; right: 3rem; "></div> *@
+                        <img class="position-absolute" src="https://statsnite.com/images/btd/heroes/@hero.Id/hero.png" style="width: 12rem; z-index: 1; left: 3rem; right: 3rem;" alt="@hero.Id" loading="lazy"/>
+                    </div>
+    
+                    <div class="p-2 my-2">
+                        <p class="h4 card-title">@name</p>
+                        <p class="card-subtitle"></p>
+    
+                        <a class="btn btn-outline-primary w-100 rounded-pill mt-2 stretched-link" href="/herodetail/@hero.Id">View</a>
+                    </div>
+
+                </div>
+                
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+}
+
+
+
+
+@code {
+    IList<TowerId> heroes = new List<TowerId>();
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        heroes = await Client.GetAllHeroIds();
+    }
+}
+

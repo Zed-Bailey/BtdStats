@@ -13,4 +13,11 @@ public interface IStatsniteClient
 
     [Get("/towers?id=true")]
     Task<IList<TowerId>> GetAllTowerIds();
+
+    [Get("/heroes")]
+    Task<IList<Hero>> GetHeroes();
+    
+    [Get("/heroes?id=true")]
+    Task<IList<TowerId>> GetAllHeroIds();
+
 }
